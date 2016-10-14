@@ -3,10 +3,10 @@
 
 angular.module('LunchCheck', [])
 
-.controller('LunchCheckController', LuckCheckController);
+.controller('LunchCheckController', WordCount);
 
-  LuckCheckController.$inject = ['$scope'];
-  function LuckCheckController($scope) {
+  WordCount.$inject = ['$scope'];
+  function WordCount($scope) {
     $scope.message = "";
     $scope.items = "";
 
@@ -21,8 +21,7 @@ angular.module('LunchCheck', [])
         }
 
         var itemsCount = $scope.items.split(',').length;
-
-        if(itemsCount <= 3 && $scope.itemsCount != "") {
+        if(itemsCount <= 3) {
           $scope.message = msgEnjoy;
           return;
         }
