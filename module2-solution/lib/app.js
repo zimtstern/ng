@@ -12,13 +12,16 @@ angular.module('ShoppingListCheckOff', [])
     var buyController = this;
 
     buyController.toBuyList = ShoppingListCheckOffService.getToBuyList();
+    buyController.allBoughtMessage = "Everything is bought!";
 
+    // this adds removes the product from buyList and adds it to boughtList
     buyController.buyProduct = function (item) {
-      try {
-        ShoppingListCheckOffService.buyProduct(item);
-      } catch(error) {
-        buyController.errorMessage = error.message;
-      }
+      ShoppingListCheckOffService.buyProduct(item);
+    };
+
+    // this checks if the given toBuyList is empty
+    buyController.allBought = function() {
+      return ShoppingListCheckOffService.isEmpty(buyController.toBuyList);
     };
   };
 
@@ -54,10 +57,6 @@ angular.module('ShoppingListCheckOff', [])
     };
 
     service.getBoughtList = function() {
-      // if(isEmpty(boughtList)) {
-      //   console.log("bought list is empty");
-      //   throw new Error("Nothing bought yet");
-      // }
       return boughtList;
     };
 
@@ -75,10 +74,6 @@ angular.module('ShoppingListCheckOff', [])
       var index = toBuyList.indexOf(item);
       toBuyList.splice(index, 1);
       console.log("index removed: " + index);
-
-      if(service.isEmpty(toBuyList)) {
-        throw new Error("Everything is bought!");
-      }
     };
 
     function addToBoughtList(item) {
@@ -89,13 +84,3 @@ angular.module('ShoppingListCheckOff', [])
   };
 
 })();
-
-
-// 2 lists "To Buy" + "Already Bought"
-// To Buy : 5 items similar to { name: "cookies", quantity: 10 }
-// Format:  Buy item_quantity item_name -> item { name: "cookies", quantity: 10 } would be listed as Buy 10 cookies
-// next to each item button with the label "Bought" -> ng-click moveToBought()
-// if empty message "Everything is bought!"
-
-// "Already Bought" empty and "Nothing bought yet" -> only when emptyMessage
-// Bought item_quantity item_name  For example Bought 10 cookies

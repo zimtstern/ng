@@ -41,12 +41,10 @@
          </button>
        </li>
      </ul>
-     <div ng-if="buyController.errorMessage" class="emptyMessage">
-       {{buyController.errorMessage}}
+     <div ng-if="buyController.allBought()" class="emptyMessage">
+       {{buyController.allBoughtMessage}}
      </div>
     </div>
-
-
 
     <!-- Already Bought List -->
     <div class="col-md-6" ng-controller="AlreadyBoughtController as boughtController">
