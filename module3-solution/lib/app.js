@@ -23,7 +23,13 @@ function MenuSearchService($http) {
   service.getMatchedMenuItems = function(searchTerm) {
     var found = [];
     var responsePromise = doHttpRequest();
-    console.log(responsePromise);
+    responsePromise.then(function(response) {
+      filterResults(response.data);
+
+
+    }).catch(function(error) {
+      //console.error("Data could not be received from server: " + error);
+    });
   };
 
   function doHttpRequest() {
@@ -31,6 +37,15 @@ function MenuSearchService($http) {
       method: "GET",
       url: ("https://davids-restaurant.herokuapp.com/menu_items.json")
     });
+  };
+
+  function filterResults(menuData) {
+    console.log("in filter: " + menuData);
+    for(var index = 0; index < menuData.length; index++) {
+      var obj = menuData[index];
+      console.log(obj);
+    }
+
   };
 
 };
