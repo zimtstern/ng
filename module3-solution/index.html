@@ -17,8 +17,10 @@
       ng-model="ctrl.searchTerm">
     </div>
     <div class="form-group narrow-button">
-      <button ng-click="ctrl.narrowItDown();"
-        class="btn btn-primary">Narrow It Down For Me!</button>
+      <button ng-click="ctrl.narrowItDown();" class="btn btn-primary">Narrow It Down For Me!</button>
+
+
+      {{ctrl.found}}
     </div>
 
     <!-- found-items should be implemented as a component -->

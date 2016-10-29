@@ -9,27 +9,35 @@ NarrowItDownController.$inject = ['MenuSearchService'];
 function NarrowItDownController( MenuSearchService) {
   var ctrl = this;
   ctrl.searchTerm = "";
+  ctrl.found = [];
 
   ctrl.narrowItDown = function() {
-    var promise = MenuSearchService.getMatchedMenuItems(ctrl.searchTerm);
+    if(!ctrl.searchTerm || ctrl.searchTerm.length === 0) {
+      console.log("Nothing to search becaus because given searchTerm not filled");
+      return;
+    }
+    ctrl.found = MenuSearchService.getMatchedMenuItems(ctrl.searchTerm);
+    console.log(ctrl.found);
   };
 
 };
 
-MenuSearchService.$inject = ['$http'];
-function MenuSearchService($http) {
+MenuSearchService.$inject = ['$q', '$http'];
+function MenuSearchService($q, $http) {
   var service = this;
 
+  service.found = [];
+
   service.getMatchedMenuItems = function(searchTerm) {
-    var found = [];
-    var responsePromise = doHttpRequest();
-    responsePromise.then(function(response) {
-      filterResults(response.data);
-
-
+    var httpPromise = doHttpRequest();
+    httpPromise.then(function(response) {
+      return filterResults(response.data.menu_items, searchTerm);
+    }).then(function(response) {
+      service.found = response;
     }).catch(function(error) {
-      //console.error("Data could not be received from server: " + error);
+      console.error("Data could not be received from server: " + error.message);
     });
+    return service.found;
   };
 
   function doHttpRequest() {
@@ -39,13 +47,51 @@ function MenuSearchService($http) {
     });
   };
 
-  function filterResults(menuData) {
-    console.log("in filter: " + menuData);
-    for(var index = 0; index < menuData.length; index++) {
-      var obj = menuData[index];
-      console.log(obj);
+
+  // service.checkName = function (name) {
+  //   var deferred = $q.defer();
+  //
+  //   var result = {
+  //     message: ""
+  //   };
+  //
+  //   $timeout(function () {
+  //     // Check for cookies
+  //     if (name.toLowerCase().indexOf('cookie') === -1) {
+  //       deferred.resolve(result)
+  //     }
+  //     else {
+  //       result.message = "Stay away from cookies, Yaakov!";
+  //       deferred.reject(result);
+  //     }
+  //   }, 3000);
+  //
+  //   return deferred.promise;
+  // };
+
+  function filterResults(menu_items, searchTerm) {
+    var deffered = $q.defer();
+
+    var found = [];
+    for(var index = 0; index < menu_items.length; index++) {
+      var currentItem = menu_items[index];
+      if(currentItem.description.indexOf(searchTerm) !== -1) {
+        // console.log("Found in description: " + currentItem.description);
+        found.push(currentItem);
+      }
     }
 
+    console.log("The searched term: " + searchTerm + " found in "
+      + found.length + " descriptions");
+
+
+    if(found.length > 0) {
+      deffered.resolve(found);
+    } else {
+      deffered.reject("Nothing found");
+    }
+
+    return deffered.promise;
   };
 
 };
