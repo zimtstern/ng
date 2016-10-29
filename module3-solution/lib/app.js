@@ -5,19 +5,29 @@ angular.module('NarrowItDownApp', [])
 .controller('NarrowItDownController', NarrowItDownController)
 .service('MenuSearchService', MenuSearchService);
 
-NarrowItDownController.$inject = ['MenuSearchService'];
-function NarrowItDownController( MenuSearchService) {
-  var ctrl = this;
-  ctrl.searchTerm = "";
-  ctrl.found = [];
+NarrowItDownController.$inject = ['$scope', 'MenuSearchService'];
+function NarrowItDownController($scope, MenuSearchService) {
+  var controller = this;
+  controller.searchTerm = "";
+  controller.found = [];
 
-  ctrl.narrowItDown = function() {
-    if(!ctrl.searchTerm || ctrl.searchTerm.length === 0) {
+  $scope.$watch('controller.found', function() {
+      console.log("updates the found list");
+  });
+
+  controller.narrowItDown = function() {
+    if(!controller.searchTerm || controller.searchTerm.length === 0) {
       console.log("Nothing to search becaus because given searchTerm not filled");
       return;
     }
-    ctrl.found = MenuSearchService.getMatchedMenuItems(ctrl.searchTerm);
-    console.log(ctrl.found);
+    var promise = MenuSearchService.getMatchedMenuItems(controller.searchTerm);
+    promise.then(function(result) {
+      controller.found = result;
+    })
+    .catch(function(error) {
+      console.error(error);
+    });
+
   };
 
 };
@@ -26,18 +36,21 @@ MenuSearchService.$inject = ['$q', '$http'];
 function MenuSearchService($q, $http) {
   var service = this;
 
-  service.found = [];
+  // service.found = [];
 
   service.getMatchedMenuItems = function(searchTerm) {
+    var defferer = $q.defer();
+
     var httpPromise = doHttpRequest();
     httpPromise.then(function(response) {
       return filterResults(response.data.menu_items, searchTerm);
     }).then(function(response) {
-      service.found = response;
+      defferer.resolve(response);
     }).catch(function(error) {
-      console.error("Data could not be received from server: " + error.message);
+      defferer.reject(error);
     });
-    return service.found;
+
+    return defferer.promise;
   };
 
   function doHttpRequest() {
@@ -47,28 +60,6 @@ function MenuSearchService($q, $http) {
     });
   };
 
-
-  // service.checkName = function (name) {
-  //   var deferred = $q.defer();
-  //
-  //   var result = {
-  //     message: ""
-  //   };
-  //
-  //   $timeout(function () {
-  //     // Check for cookies
-  //     if (name.toLowerCase().indexOf('cookie') === -1) {
-  //       deferred.resolve(result)
-  //     }
-  //     else {
-  //       result.message = "Stay away from cookies, Yaakov!";
-  //       deferred.reject(result);
-  //     }
-  //   }, 3000);
-  //
-  //   return deferred.promise;
-  // };
-
   function filterResults(menu_items, searchTerm) {
     var deffered = $q.defer();
 
@@ -76,14 +67,12 @@ function MenuSearchService($q, $http) {
     for(var index = 0; index < menu_items.length; index++) {
       var currentItem = menu_items[index];
       if(currentItem.description.indexOf(searchTerm) !== -1) {
-        // console.log("Found in description: " + currentItem.description);
         found.push(currentItem);
       }
     }
 
     console.log("The searched term: " + searchTerm + " found in "
       + found.length + " descriptions");
-
 
     if(found.length > 0) {
       deffered.resolve(found);
