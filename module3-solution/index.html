@@ -26,9 +26,11 @@
     <!-- found-items should be implemented as a component -->
     <!-- <found-items found-items="...." on-remove="...."></found-items> -->
     <found-items
-      items="controller.found"
-      on-remove="ctrl.removeItem(index)"></found-items>
+      items="controller.found"></found-items>
 
+      <div class="error" ng-if="controller.checkNothingFound();">
+        {{controller.noResult}}
+      </div>
   </div>
 
 </body>

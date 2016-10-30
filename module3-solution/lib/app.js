@@ -14,19 +14,17 @@ function FoundItems() {
     },
     templateUrl: 'directives/foundItems.html',
     controller: FoundItemsDirectiveController,
-    controllerAs: 'ctrl',
+    controllerAs: 'directiveController',
     bindToController: true
   };
   return ddo;
 };
 
 function FoundItemsDirectiveController() {
-  var dirController = this;
+  var directiveController = this;
 
-  controller.removeItem = function(index) {
-    alert("in remove");
-    MenuSearchService.removeItem(controller.found, index);
-  };
+
+
 };
 
 NarrowItDownController.$inject = ['$scope', 'MenuSearchService'];
@@ -34,6 +32,7 @@ function NarrowItDownController($scope, MenuSearchService) {
   var controller = this;
   controller.searchTerm = "";
   controller.found = [];
+  controller.noResult = "";
 
   $scope.$watch('controller.found', function() {
       console.log("updates the found list");
@@ -47,10 +46,21 @@ function NarrowItDownController($scope, MenuSearchService) {
     var promise = MenuSearchService.getMatchedMenuItems(controller.searchTerm);
     promise.then(function(result) {
       controller.found = result;
+      controller.noResult = "";
     })
     .catch(function(error) {
-      console.error(error);
+      controller.found = [];
+      controller.noResult = error;
     });
+  };
+
+  controller.removeItem = function(index) {
+    alert("in remove");
+    MenuSearchService.removeItem(controller.found, index);
+  };
+
+  controller.checkNothingFound = function () {
+    return controller.noResult.length > 0;
   };
 };
 

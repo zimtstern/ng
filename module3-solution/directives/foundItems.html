@@ -1,7 +1,10 @@
 <ol>
-  <li ng-repeat="item in items">
+  <li ng-repeat="item in directiveController.items">
     {{item.name}}, {{item.short_name}}, {{item.description}}
-    <button ng-click="ctrl.onRemove({index: $index});" name="button">Don't want this one!</button>
+    <!-- <button ng-click="ctrl.onRemove({index: $index});" name="button">Don't want this one!</button> -->
   </li>
-
 </ol>
+
+<div class="error" ng-if="directiveController.noResult();">
+  Nothing found
+</div>
