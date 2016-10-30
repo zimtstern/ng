@@ -23,8 +23,6 @@ function FoundItems() {
 function FoundItemsDirectiveController() {
   var directiveController = this;
 
-
-
 };
 
 NarrowItDownController.$inject = ['$scope', 'MenuSearchService'];
@@ -54,13 +52,12 @@ function NarrowItDownController($scope, MenuSearchService) {
     });
   };
 
-  controller.removeItem = function(index) {
-    alert("in remove");
-    MenuSearchService.removeItem(controller.found, index);
-  };
-
   controller.checkNothingFound = function () {
     return controller.noResult.length > 0;
+  };
+
+  controller.removeItem = function(index) {
+    MenuSearchService.removeItem(controller.found, index);
   };
 };
 
