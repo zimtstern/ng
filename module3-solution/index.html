@@ -20,15 +20,15 @@
       <button ng-click="controller.narrowItDown();" class="btn btn-primary">Narrow It Down For Me!</button>
     </div>
 
-<br><br><div>
-    <ol>
-      <li ng-repeat="item in controller.found">{{item.name}}, {{item.short_name}}, {{item.description}}</li>
-    </ol>
-</div>
+    <br><br>
 
 
     <!-- found-items should be implemented as a component -->
-    <found-items found-items="...." on-remove="...."></found-items>
+    <!-- <found-items found-items="...." on-remove="...."></found-items> -->
+    <found-items
+      items="controller.found"
+      on-remove="ctrl.removeItem(index)"></found-items>
+
   </div>
 
 </body>
