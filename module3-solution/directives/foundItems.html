@@ -1,6 +1,9 @@
-<ol>
-  <li ng-repeat="item in directiveController.items">
-    {{item.name}}, {{item.short_name}}, {{item.description}}
-    <button ng-click="directiveController.onRemove({index: $index});" name="button">Don't want this one!</button>
-  </li>
-</ol>
+
+  <table border="1" style="width: 100%">
+    <tr ng-repeat="item in directiveController.items">
+      <td>{{item.name}}</td>
+      <td>{{item.short_name}}</td>
+      <td>{{item.description}}</td>
+      <td><button ng-click="directiveController.onRemove({index: $index});" name="button">Don't want this one!</button></td>
+    </tr>
+  </table>
