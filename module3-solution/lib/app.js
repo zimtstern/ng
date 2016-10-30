@@ -39,6 +39,8 @@ function NarrowItDownController($scope, MenuSearchService) {
   controller.narrowItDown = function() {
     if(!controller.searchTerm || controller.searchTerm.length === 0) {
       console.log("Nothing to search becaus because given searchTerm not filled");
+      controller.noResult = "Nothing found";
+      controller.found = [];
       return;
     }
     var promise = MenuSearchService.getMatchedMenuItems(controller.searchTerm);
@@ -110,17 +112,9 @@ function MenuSearchService($q, $http) {
     } else {
       deffered.reject("Nothing found");
     }
-
     return deffered.promise;
   };
 
 };
 
-
-
 })();
-
-// gib den suchbegriff weiter an den controller
-// hol dir dir ganze liste
-
-// menu item, its short_name, and the description
