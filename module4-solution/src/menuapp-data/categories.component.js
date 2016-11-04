@@ -3,7 +3,7 @@
 
 angular.module('Data')
 .component('categories', {
-    templateUrl: '',
+    templateUrl: 'src/templates/cmp/categories.html',
     bindings: {
       items: '<'
     }

@@ -13,6 +13,10 @@ angular.module('MenuApp')
     .state('home', {
       url: '/',
       templateUrl: 'src/templates/home.html'
+    })
+    .state('categoryList', {
+      url: '/categoryList',
+      templateUrl: 'src/templates/categorylist.html'
     });
 
 
