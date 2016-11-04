@@ -10,10 +10,16 @@ angular.module('MenuApp')
     $urlRouterProvider.otherwise("/");
 
     $stateProvider
-    .state({'categoryList', [
-      url: '/categoryList',
-      templateUrl: '/templates/categoryList.html'
-    ]});
+    .state('home', {
+      url: '/',
+      templateUrl: 'src/templates/home.html'
+    });
+
+
+    // .state({'categoryList', [
+    //   url: '/categoryList',
+    //   templateUrl: 'src/templates/categoryList.html'
+    // ]});
 
     // .state({'categoryList.menuItems', [
     //   url: '/menuItems/{category}',
