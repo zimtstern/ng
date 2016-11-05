@@ -1,12 +1,12 @@
 (function () {
 'use strict';
 
-angular.module('Data')
+angular.module('MenuApp')
 .component('categories', {
     templateUrl: 'src/templates/cmp/categories.html',
     bindings: {
-      items: '<'
+      categories: '<'
     }
-  }
+  });
 
 })();

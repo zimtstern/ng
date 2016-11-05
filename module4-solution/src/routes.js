@@ -16,7 +16,13 @@ angular.module('MenuApp')
     })
     .state('categoryList', {
       url: '/categoryList',
-      templateUrl: 'src/templates/categorylist.html'
+      templateUrl: 'src/templates/categorylist.html',
+      controller: 'CmpCategoriesListController as cmpCatCtrl',
+      resolve: {
+        categories: ['MenuDataService', function(MenuDataService) {
+          return MenuDataService.getAllCategories();
+        }]
+      }
     });
 
 

@@ -10,6 +10,10 @@ angular.module('Data')
 
     service.getAllCategories = function() {
       // https://davids-restaurant.herokuapp.com/categories.json
+      return $http({
+        method: "GET",
+        url: ("https://davids-restaurant.herokuapp.com/categories.json")
+      });
     };
 
     service.getItemsForCategory = function(categoryShortName) {

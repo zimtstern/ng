@@ -1,1 +1,8 @@
-<li>cat data</li>
+<ul>
+  <!-- <li ng-repeat="item in $ctrl.categoryList"
+      ui-sref="itemDetail({itemId: $index})"> -->
+      component content: <br>
+  <li ng-repeat="category in $ctrl.categories">
+    {{category.name}}
+  </li>
+</ul>
