@@ -14,8 +14,8 @@ angular.module('MenuApp')
       url: '/',
       templateUrl: 'src/templates/home.html'
     })
-    .state('categoryList', {
-      url: '/categoryList',
+    .state('categories', {
+      url: '/categories',
       templateUrl: 'src/templates/categorylist.html',
       controller: 'CategoriesListController as catCtrl',
       resolve: {
