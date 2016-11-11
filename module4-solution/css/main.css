@@ -1,0 +1,29 @@
+html {
+  font-family: arial;
+  font-size: 10pt;
+}
+h1 {
+  font-size: 14pt;
+}
+h2 {
+  font-size: 13pt;
+}
+li {
+  list-style-type: none;
+  margin: 10px;
+  width: 40%;
+}
+li a {
+  padding: 5px;
+  margin: 5px;
+}
+li a:hover {
+  border: 1px solid black;
+  color: blue;
+}
+a {
+  color: grey;
+}
+a:active {
+  color:
+}

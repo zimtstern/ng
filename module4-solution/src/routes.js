@@ -14,27 +14,28 @@ angular.module('MenuApp')
       url: '/',
       templateUrl: 'src/templates/home.html'
     })
-    .state('categoryList', {
-      url: '/categoryList',
+    .state('categories', {
+      url: '/categories',
       templateUrl: 'src/templates/categorylist.html',
-      controller: 'CmpCategoriesListController as cmpCatCtrl',
+      controller: 'CategoriesListController as catCtrl',
       resolve: {
         categories: ['MenuDataService', function(MenuDataService) {
-          return MenuDataService.getAllCategories();
+            return MenuDataService.getAllCategories();
         }]
+      }
+    })
+    .state('menuItems', {
+      url: '/menuItems/{categoryShortName}',
+      templateUrl: 'src/templates/menuitems.html',
+      controller: 'MenuItemsController as menuItemsCtrl',
+      resolve: {
+        menuData: ['$stateParams', 'MenuDataService',
+          function($stateParams, MenuDataService) {
+            return MenuDataService.getItemsForCategory($stateParams.categoryShortName);
+          }]
       }
     });
 
-
-    // .state({'categoryList', [
-    //   url: '/categoryList',
-    //   templateUrl: 'src/templates/categoryList.html'
-    // ]});
-
-    // .state({'categoryList.menuItems', [
-    //   url: '/menuItems/{category}',
-    //   templateUrl: '../templates/menuItems.html'
-    // ]})
   };
 
 })();

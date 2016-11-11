@@ -2,22 +2,13 @@
 'use strict';
 
 angular.module('Data')
-.controller('CmpCategoriesListController', CmpCategoriesListController);
+.controller('CategoriesListController', CategoriesListController);
 
-  CmpCategoriesListController.$inject = ['categories'];
-  function CmpCategoriesListController(categories) {
-    var cmpCatCtrl = this;
+  CategoriesListController.$inject = ['categories'];
+  function CategoriesListController(categories) {
+    var catCtrl = this;
 
-    console.log(categories.data);
-    cmpCatCtrl.categoriesList = categories.data;
-    // categories.then(function(response) {
-    //   console.log("Promise" + response);
-    //   console.log("Data: " + response.data);
-    //   console.log("FIRST NAME: " + response.data[0].name);
-    //   cmpCatCtrl.categoriesList = response.data;
-    // });
-
-
+    catCtrl.categoriesList = categories.data;
   };
 
 })();
