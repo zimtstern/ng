@@ -12,20 +12,21 @@ function SignupController(SignupService) {
     firstName: "",
     lastName: "",
     email: "",
+    favorite: "",
     phone: ""
   };
 
   signupCtrl.checkFavorite = function() {
-    console.log("Checking category: " + signupCtrl.user.favorite);
-    var test = SignupService.getCategoryByShortName(signupCtrl.user.favorite);
-    test.then(function (response) {
+    SignupService.getCategoryByShortName(signupCtrl.user.favorite)
+    .then(function (response) {
       signupCtrl.error = false;
       signupCtrl.successMsg = "Your information has been saved";
+      SignupService.saveUserInformation(signupCtrl.user, response.data);
     })
     .catch(function (error) {
       signupCtrl.error = true;
     });
-    // console.log("True or false: " + test);
+
   };
 }
 
