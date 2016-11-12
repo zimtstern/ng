@@ -183,3 +183,20 @@ h3.menu-item-title {
     width: 100%;
   }
 }
+
+
+input {
+  color: grey;
+}
+
+button:disabled {
+  background-color: grey;
+}
+
+button {
+  background-color: black;
+}
+
+.ng-touched .ng-invalid {
+  border: 2px solid red;
+}
